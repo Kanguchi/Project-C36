@@ -32,6 +32,11 @@ function setup() {
   foodStock = database.ref('Food');
   foodStock.on("value", readStock);
 
+  fedTime = database.ref('FeedTime');
+  fedTime.on("value", function(data){
+    lastFed = data.val();
+  });
+
   feed = createButton("Feed the Dog");
   feed.position(750, 95);
   feed.mousePressed(feedDog);
@@ -49,23 +54,7 @@ function setup() {
 
 
 function draw() {  
-  
-  foodObj.display();
 
-  fedTime = database.ref('FeedTime');
-  fedTime.on("value", function(data){
-    lastFed = data.val();
-  });
-
-  if (gameState !== "Hungry"){
-    feed.hide();
-    addFood.hide();
-    dog.remove();
-  } else {
-    feed.show();
-    addFood.show();
-    dog.addImage(dogImg);
-  }
   currentTime = hour();
   if (currentTime === (lastFed + 1)){
     update("Playing");
@@ -79,6 +68,16 @@ function draw() {
   } else {
       update("Hungry");
       foodObj.display();
+  }
+
+  if (gameState !== "Hungry"){
+    feed.hide();
+    addFood.hide();
+    dog.remove();
+  } else {
+    feed.show();
+    addFood.show();
+    dog.addImage(dogImg);
   }
 
   fill(255, 255, 254);

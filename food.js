@@ -9,7 +9,7 @@ class food{
         this.foodStock = foodStock;
     }
     getFoodStock(){
-        return this.foodStock = this.foodStock-1;
+        return this.foodStock;
     }
     deductFood(){
         if(this.foodStock > 0){
